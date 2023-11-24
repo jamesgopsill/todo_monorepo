@@ -1,3 +1,4 @@
 {
-	"DB_FILE": ""
+	"DB_FILE": "",
+	"JWT_SECRET": ""
 }

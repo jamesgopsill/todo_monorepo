@@ -13,12 +13,14 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"@types/jsonwebtoken": "^9.0.5",
 		"@types/lokijs": "^1.5.14",
 		"@types/node": "^20.10.0"
 	},
 	"dependencies": {
 		"@sinclair/typebox": "^0.31.28",
 		"hyper-express": "^6.14.3",
+		"jsonwebtoken": "^9.0.2",
 		"lokijs": "^1.5.12",
 		"tsx": "^4.4.0"
 	}
