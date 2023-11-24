@@ -1,0 +1,19 @@
+{
+	"$schema": "https://json.schemastore.org/package",
+	"name": "todo",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"format": "prettier --write .",
+		"start:server": "pnpm -F=server run start"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"prettier": "^3.1.0",
+		"typescript": "^5.3.2"
+	}
+}

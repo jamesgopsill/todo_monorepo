@@ -1,0 +1,25 @@
+{
+	"$schema": "https://json.schemastore.org/package",
+	"name": "server",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.ts",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "tsx index.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/lokijs": "^1.5.14",
+		"@types/node": "^20.10.0"
+	},
+	"dependencies": {
+		"@sinclair/typebox": "^0.31.28",
+		"hyper-express": "^6.14.3",
+		"lokijs": "^1.5.12",
+		"tsx": "^4.4.0"
+	}
+}
