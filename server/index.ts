@@ -7,6 +7,7 @@ import { authenticate } from "./middlewares/authenticate.js"
 import { responseTime } from "./middlewares/response-time.js"
 import { sanitize } from "./middlewares/sanitize.js"
 import { pingRouter } from "./routers/ping.js"
+import { userRouter } from "./routers/user.js"
 import { Locals, User, UserScopes } from "./types.js"
 
 if (import.meta.url.startsWith("file:")) {
@@ -45,6 +46,7 @@ function initServer() {
 		app.use(authenticate)
 
 		app.use("/api", pingRouter)
+		app.use("/api/user", userRouter)
 
 		const port = 3000
 		app

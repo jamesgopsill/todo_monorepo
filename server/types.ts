@@ -1,3 +1,4 @@
+import { FormatRegistry, Static, Type } from "@sinclair/typebox"
 import { Request, Response } from "hyper-express"
 import { Collection } from "lokijs"
 
@@ -41,3 +42,40 @@ export async function typeArgsContextSend<Args = unknown>(
 		},
 	}
 }
+
+FormatRegistry.Set("email", (value) =>
+	/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i.test(
+		value,
+	),
+)
+
+export const RegisterArgs = Type.Object(
+	{
+		name: Type.String(),
+		email: Type.String({
+			format: "email",
+		}),
+		confirmEmail: Type.String({
+			format: "email",
+		}),
+		password: Type.String(),
+		confirmPassword: Type.String(),
+	},
+	{
+		additionalProperties: false,
+	},
+)
+export type RegisterArgs = Static<typeof RegisterArgs>
+
+export const LoginArgs = Type.Object(
+	{
+		email: Type.String({
+			format: "email",
+		}),
+		password: Type.String(),
+	},
+	{
+		additionalProperties: false,
+	},
+)
+export type LoginArgs = Static<typeof LoginArgs>
