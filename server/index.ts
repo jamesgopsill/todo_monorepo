@@ -10,6 +10,8 @@ import { pingRouter } from "./routers/ping.js"
 import { userRouter } from "./routers/user.js"
 import { Locals, User, UserScopes } from "./types.js"
 
+export * from "./types.js"
+
 if (import.meta.url.startsWith("file:")) {
 	const modulePath = fileURLToPath(import.meta.url)
 	if (process.argv[1] === modulePath) {
@@ -18,7 +20,7 @@ if (import.meta.url.startsWith("file:")) {
 	}
 }
 
-function initServer() {
+export function initServer() {
 	const db = new Loki(globalVars.DB_FILE, {
 		autoload: true,
 		autoloadCallback: initRestAPI,

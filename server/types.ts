@@ -25,9 +25,9 @@ export interface Locals {
 	usersCollection: Collection<User>
 }
 
-export interface ResponseBody {
+export interface ResponseBody<T = any> {
 	error: string | null
-	data: any
+	data: T
 }
 
 export async function typeArgsContextSend<Args = unknown>(
