@@ -79,3 +79,6 @@ export const LoginArgs = Type.Object(
 	},
 )
 export type LoginArgs = Static<typeof LoginArgs>
+
+export const EmptyObject = Type.Object({}, { additionalProperties: false })
+export type EmptyObject = Static<typeof EmptyObject>

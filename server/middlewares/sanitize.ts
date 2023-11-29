@@ -1,13 +1,15 @@
 import { MiddlewareHandler } from "hyper-express"
 
 export const sanitize: MiddlewareHandler = (_, response, next) => {
+	console.log(`sanitize (Down)`)
 	const json = response.json
-	//@ts-expect-error
 	response.json = function (body: any) {
 		if (body.data != null) sanitizeResponseObject(body.data)
-		json.call(this, body)
+		return json.call(this, body)
 	}
 	next()
+	console.log(`sanitize (Up)`)
+	return
 }
 
 const sanitizeResponseObject = (obj: any) => {

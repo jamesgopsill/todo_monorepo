@@ -1,5 +1,6 @@
 import { Router, UserRouteHandler } from "hyper-express"
-import { typeArgsContextSend } from "../types.js"
+import { validate } from "../middlewares/validate.js"
+import { EmptyObject, typeArgsContextSend } from "../types.js"
 
 const ping: UserRouteHandler = async (request, response) => {
 	console.log(`ping: ${request.url}`)
@@ -11,4 +12,4 @@ const ping: UserRouteHandler = async (request, response) => {
 }
 
 export const pingRouter = new Router()
-pingRouter.get("/ping", ping)
+pingRouter.get("/ping", [validate(EmptyObject)], ping)

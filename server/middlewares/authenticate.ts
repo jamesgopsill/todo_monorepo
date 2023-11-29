@@ -4,11 +4,12 @@ import { globalVars } from "../globals.js"
 import { DecodedUserToken, Locals } from "../types.js"
 
 export const authenticate: MiddlewareHandler = (request, response, next) => {
-	console.log(`authenticate: ${request.url}`)
+	console.log(`authenticate (Down): ${request.url}`)
 	const ctx = request.locals as Locals
 
 	if (!request.headers["authorization"]) {
 		next()
+		console.log(`authenticate (Up): ${request.url}`)
 		return
 	}
 
@@ -33,6 +34,7 @@ export const authenticate: MiddlewareHandler = (request, response, next) => {
 		const decoded = jwt.verify(token, globalVars.JWT_SECRET) as DecodedUserToken
 		ctx.user = decoded
 		next()
+		console.log(`authenticate (Up): ${request.url}`)
 		return
 	} catch (e: any) {
 		return response.status(500).json({

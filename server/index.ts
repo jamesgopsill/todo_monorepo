@@ -1,14 +1,16 @@
 import { pbkdf2Sync, randomBytes, randomUUID } from "crypto"
-import { MiddlewareHandler, Server } from "hyper-express"
+import { Server } from "hyper-express"
 import Loki from "lokijs"
 import { fileURLToPath } from "url"
 import { globalVars } from "./globals.js"
+import { applyLocals } from "./middlewares/apply-locals.js"
 import { authenticate } from "./middlewares/authenticate.js"
+import { parseBody } from "./middlewares/parse-body.js"
 import { responseTime } from "./middlewares/response-time.js"
 import { sanitize } from "./middlewares/sanitize.js"
 import { pingRouter } from "./routers/ping.js"
 import { userRouter } from "./routers/user.js"
-import { Locals, User, UserScopes } from "./types.js"
+import { User, UserScopes } from "./types.js"
 
 export * from "./types.js"
 
@@ -32,19 +34,17 @@ export function initServer() {
 		// Initialise the users collection here.
 		const usersCollection = initUsersCollection(db)
 
-		const defaultLocalContext: MiddlewareHandler = (request, _, next) => {
-			console.log(`defaultLocalContext: ${request.url}`)
-			let ctx = request.locals as Locals
-			ctx.user = null
-			ctx.usersCollection = usersCollection
-			next()
-		}
-
 		// Create the REST API
 		const app = new Server()
+		app.use(parseBody)
 		app.use(responseTime)
 		app.use(sanitize)
-		app.use(defaultLocalContext)
+		app.use(
+			applyLocals({
+				user: null,
+				usersCollection: usersCollection,
+			}),
+		)
 		app.use(authenticate)
 
 		app.use("/api", pingRouter)

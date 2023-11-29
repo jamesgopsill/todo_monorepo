@@ -3,15 +3,30 @@ import { Value } from "@sinclair/typebox/value"
 import type { MiddlewareHandler } from "hyper-express"
 
 export const validate = (schema: TSchema) => {
-	const validate: MiddlewareHandler = async (request, response, next) => {
-		const data = await request.json()
-		if (!Value.Check(schema, data)) {
-			return response.status(400).json({
-				error: "Invalid request. See data for details.",
-				data: [...Value.Errors(schema, data)],
+	const v: MiddlewareHandler = (request, response, next) => {
+		console.log(`validate (Down) ${request.url}`)
+		//@ts-expect-error
+		if (request._body_json == undefined) {
+			console.log(
+				"Validate requires body to have been called first and the json cached.",
+			)
+			return response.status(500).json({
+				error: "parse body not implement",
+				data: null,
 			})
 		}
-		return next()
+
+		//@ts-expect-error
+		if (!Value.Check(schema, request._body_json)) {
+			return response.status(400).json({
+				error: "Invalid request. See data for details.",
+				//@ts-expect-error
+				data: [...Value.Errors(schema, request._body_json)],
+			})
+		}
+		next()
+		console.log(`validate (Up) ${request.url}`)
+		return
 	}
-	return validate
+	return v
 }
