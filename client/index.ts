@@ -1,20 +1,22 @@
-import { ResponseBody } from "server"
+import { UserEndpoint } from "./endpoints/user"
 import { HttpResponse } from "./types"
 
 export class Client {
 	public endpoint: string
 	public token: string
+	public user: UserEndpoint
 
 	constructor() {
 		this.endpoint = ""
 		this.token = ""
+		this.user = new UserEndpoint(this)
 	}
 
 	public _fetch = _fetch
 
 	public ping = () => {
 		const url = "/ping"
-		return this._fetch<ResponseBody<string>>("GET", url)
+		return this._fetch<string>("GET", url)
 	}
 }
 

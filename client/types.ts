@@ -2,7 +2,10 @@ export type HttpResponse<T> =
 	| ({
 			ok: true
 			status: 200
-			content: T
+			content: {
+				error: null
+				data: T
+			}
 	  } & Response)
 	| ({
 			ok: true
@@ -12,5 +15,8 @@ export type HttpResponse<T> =
 	| ({
 			ok: false
 			status: 400
-			content: T
+			content: {
+				error: string
+				data: any
+			}
 	  } & Response)
