@@ -1,4 +1,4 @@
-import { UserEndpoint } from "./endpoints/user"
+import { UserEndpoint } from "./endpoints/user.js"
 import { HttpResponse } from "./types"
 
 export class Client {
