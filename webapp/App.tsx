@@ -1,3 +1,4 @@
+import { Client } from "client"
 import React, { useState } from "react"
 import { RouterProvider, createHashRouter } from "react-router-dom"
 import { AppContext, AppData } from "./AppContext"
@@ -44,6 +45,8 @@ const router = createHashRouter([
 export function App() {
 	const [appData, setAppData] = useState<AppData>({
 		token: null,
+		client: new Client(),
+		user: null,
 	})
 
 	return (
