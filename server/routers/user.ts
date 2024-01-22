@@ -1,16 +1,11 @@
 import { pbkdf2Sync, randomBytes, randomUUID, timingSafeEqual } from "crypto"
 import { Router, UserRouteHandler } from "hyper-express"
 import jwt from "jsonwebtoken"
+import { LoginArgs, RegisterArgs, User, UserScopes } from "types"
 import { globalVars } from "../globals.js"
 import { authorise } from "../middlewares/authorise.js"
 import { validate } from "../middlewares/validate.js"
-import {
-	LoginArgs,
-	RegisterArgs,
-	User,
-	UserScopes,
-	typeArgsContextSend,
-} from "../types.js"
+import { typeArgsContextSend } from "../types.js"
 
 const register: UserRouteHandler = async (request, response) => {
 	console.log(`register: ${request.url}`)

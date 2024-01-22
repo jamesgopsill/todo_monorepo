@@ -1,6 +1,7 @@
 import { pbkdf2Sync, randomBytes, randomUUID } from "crypto"
 import { Server } from "hyper-express"
 import Loki from "lokijs"
+import { User, UserScopes } from "types"
 import { fileURLToPath } from "url"
 import { globalVars } from "./globals.js"
 import { applyLocals } from "./middlewares/apply-locals.js"
@@ -10,9 +11,6 @@ import { responseTime } from "./middlewares/response-time.js"
 import { sanitize } from "./middlewares/sanitize.js"
 import { pingRouter } from "./routers/ping.js"
 import { userRouter } from "./routers/user.js"
-import { User, UserScopes } from "./types.js"
-
-export * from "./types.js"
 
 if (import.meta.url.startsWith("file:")) {
 	const modulePath = fileURLToPath(import.meta.url)

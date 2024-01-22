@@ -1,5 +1,5 @@
+import { HttpResponse } from "types"
 import { UserEndpoint } from "./endpoints/user.js"
-import { HttpResponse } from "./types"
 
 export class Client {
 	public endpoint: string

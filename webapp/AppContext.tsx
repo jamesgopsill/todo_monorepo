@@ -1,10 +1,6 @@
 import { Client } from "client"
 import { createContext } from "react"
-
-export enum UserScopes {
-	USER = "USER",
-	ADMIN = "ADMIN",
-}
+import { UserScopes } from "types"
 
 export interface DecodedUserToken {
 	id: string

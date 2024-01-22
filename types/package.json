@@ -1,0 +1,12 @@
+{
+	"$schema": "https://json.schemastore.org/package",
+	"name": "types",
+	"version": "0.0.1",
+	"description": "",
+	"main": "src/index.ts",
+	"type": "module",
+	"dependencies": {
+		"@sinclair/typebox": "^0.31.28",
+		"@types/lokijs": "^1.5.14"
+	}
+}

@@ -1,4 +1,4 @@
-import { LoginArgs, RegisterArgs, User } from "server"
+import type { LoginArgs, RegisterArgs, User } from "types"
 import { Client } from "../index.js"
 
 export interface UserMeResponse extends Omit<User, "salt" | "hash"> {}

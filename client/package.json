@@ -12,6 +12,6 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"server": "workspace:*"
+		"types": "workspace:*"
 	}
 }
