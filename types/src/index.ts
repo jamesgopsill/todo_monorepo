@@ -1,6 +1,23 @@
 import { FormatRegistry, Static, Type } from "@sinclair/typebox"
 import type { Collection } from "lokijs"
 
+export interface ToDo {
+	id: string
+	text: string
+	createdById: string
+	createdDate: Date
+}
+
+export const PostToDoArgs = Type.Object(
+	{
+		text: Type.String(),
+	},
+	{
+		additionalProperties: false,
+	},
+)
+export type PostToDoArgs = Static<typeof PostToDoArgs>
+
 export enum UserScopes {
 	USER = "USER",
 	ADMIN = "ADMIN",
@@ -21,7 +38,10 @@ export interface DecodedUserToken extends Omit<User, "salt" | "hash"> {
 
 export interface Locals {
 	user: null | DecodedUserToken
-	usersCollection: Collection<User>
+	collections: {
+		users: Collection<User>
+		todos: Collection<ToDo>
+	}
 }
 
 export interface ResponseBody<T = any> {

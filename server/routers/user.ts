@@ -28,7 +28,7 @@ const register: UserRouteHandler = async (request, response) => {
 		})
 	}
 
-	const user = ctx.usersCollection.by("email", args.email)
+	const user = ctx.collections.users.by("email", args.email)
 	if (user) {
 		return send(400, {
 			error: "User already exists",
@@ -48,7 +48,7 @@ const register: UserRouteHandler = async (request, response) => {
 			salt: salt.toString("hex"),
 			scopes: [UserScopes.USER],
 		}
-		ctx.usersCollection.insert(user)
+		ctx.collections.users.insert(user)
 		return send(200, {
 			error: null,
 			data: "success",
@@ -68,7 +68,7 @@ const login: UserRouteHandler = async (request, response) => {
 		response,
 	)
 
-	const user = ctx.usersCollection.by("email", args.email)
+	const user = ctx.collections.users.by("email", args.email)
 	if (!user) {
 		return send(400, {
 			error: "User does not exist",
@@ -150,7 +150,7 @@ const me: UserRouteHandler = async (request, response) => {
 		})
 	}
 
-	const user = ctx.usersCollection.by("id", ctx.user.id)
+	const user = ctx.collections.users.by("id", ctx.user.id)
 	if (!user) {
 		return send(400, {
 			error: "No user found",

@@ -1,7 +1,7 @@
 import { pbkdf2Sync, randomBytes, randomUUID } from "crypto"
 import { Server } from "hyper-express"
 import Loki from "lokijs"
-import { User, UserScopes } from "types"
+import { ToDo, User, UserScopes } from "types"
 import { fileURLToPath } from "url"
 import { globalVars } from "./globals.js"
 import { applyLocals } from "./middlewares/apply-locals.js"
@@ -10,6 +10,7 @@ import { parseBody } from "./middlewares/parse-body.js"
 import { responseTime } from "./middlewares/response-time.js"
 import { sanitize } from "./middlewares/sanitize.js"
 import { pingRouter } from "./routers/ping.js"
+import { todoRouter } from "./routers/todo.js"
 import { userRouter } from "./routers/user.js"
 
 if (import.meta.url.startsWith("file:")) {
@@ -31,6 +32,7 @@ export function initServer() {
 	function initRestAPI() {
 		// Initialise the users collection here.
 		const usersCollection = initUsersCollection(db)
+		const todosCollection = initToDosCollection(db)
 
 		// Create the REST API
 		const app = new Server()
@@ -40,13 +42,17 @@ export function initServer() {
 		app.use(
 			applyLocals({
 				user: null,
-				usersCollection: usersCollection,
+				collections: {
+					users: usersCollection,
+					todos: todosCollection,
+				},
 			}),
 		)
 		app.use(authenticate)
 
 		app.use("/api", pingRouter)
 		app.use("/api/user", userRouter)
+		app.use("/api/todo", todoRouter)
 
 		const port = 3000
 		app
@@ -90,4 +96,15 @@ function initUsersCollection(db: Loki) {
 		usersCollection.insert(user)
 	}
 	return usersCollection
+}
+
+function initToDosCollection(db: Loki) {
+	let todosCollection = db.getCollection<ToDo>("todos")
+	if (todosCollection == null) {
+		todosCollection = db.addCollection<ToDo>("todos", {
+			indices: ["id"],
+			clone: true,
+		})
+	}
+	return todosCollection
 }
