@@ -1,15 +1,18 @@
 import { HttpResponse } from "types"
+import { ToDoEndpoint } from "./endpoints/todo.js"
 import { UserEndpoint } from "./endpoints/user.js"
 
 export class Client {
 	public endpoint: string
 	public token: string
 	public user: UserEndpoint
+	public todo: ToDoEndpoint
 
 	constructor() {
 		this.endpoint = ""
 		this.token = ""
 		this.user = new UserEndpoint(this)
+		this.todo = new ToDoEndpoint(this)
 	}
 
 	public _fetch = _fetch
@@ -22,7 +25,7 @@ export class Client {
 
 async function _fetch<T>(
 	this: Client,
-	method: "GET" | "POST" | "PUT" | "PATCH",
+	method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
 	url: string,
 	params: { [key: string]: any } | undefined = undefined,
 ) {
