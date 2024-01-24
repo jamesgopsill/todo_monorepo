@@ -1,6 +1,8 @@
 import { Client } from "client"
+import { jwtDecode } from "jwt-decode"
 import React, { useState } from "react"
 import { RouterProvider, createHashRouter } from "react-router-dom"
+import { DecodedUserToken } from "types"
 import { AppContext, AppData } from "./AppContext"
 import { AuthenticatedRoute } from "./components/AuthenticatedRoute"
 import { Root } from "./components/Root"
@@ -43,10 +45,18 @@ const router = createHashRouter([
 ])
 
 export function App() {
+	const token = localStorage.getItem("token")
+	const client = new Client()
+	let user = null
+	if (token) {
+		client.token = token
+		user = jwtDecode(token) as DecodedUserToken
+	}
+
 	const [appData, setAppData] = useState<AppData>({
-		token: null,
-		client: new Client(),
-		user: null,
+		token: token,
+		client: client,
+		user: user,
 	})
 
 	return (

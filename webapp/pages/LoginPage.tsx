@@ -26,7 +26,7 @@ export function LoginPage() {
 				user: { ...decodedToken },
 			})
 			localStorage.setItem("token", content.data)
-			navigate("/#home")
+			navigate("/home")
 			return
 		}
 	}
